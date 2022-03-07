@@ -126,8 +126,8 @@ package mempool_pkg;
    *********************/
 
   localparam int unsigned AxiHierRadix      = `ifdef AXI_HIER_RADIX `AXI_HIER_RADIX `else NumTilesPerGroup `endif;
-  localparam int unsigned ROCacheLineWidth  = `ifdef RO_LINE_WIDTH `RO_LINE_WIDTH `else ICacheLineWidth `endif;
-  localparam int unsigned ROCacheSizeByte   = 2*8192;
+  localparam int unsigned ROCacheLineWidth  = `ifdef RO_LINE_WIDTH `RO_LINE_WIDTH `else 2*ICacheLineWidth `endif;
+  localparam int unsigned ROCacheSizeByte   = 8192;
   localparam int unsigned ROCacheSets       = 2;
 
   localparam int unsigned ROCacheNumAddrRules = 4;
