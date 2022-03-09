@@ -21,4 +21,4 @@ num_cores_per_tile ?= 4
 axi_hier_radix ?= 16
 
 # Number of AXI masters per group
-axi_masters_per_group ?= 4
+axi_masters_per_group ?= 1

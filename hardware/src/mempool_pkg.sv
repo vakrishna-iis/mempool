@@ -23,7 +23,7 @@ package mempool_pkg;
   localparam integer unsigned NumCoresPerCache = NumCoresPerTile;
   localparam integer unsigned AxiCoreIdWidth   = 1;
   localparam integer unsigned AxiTileIdWidth   = AxiCoreIdWidth+1; // + 1 for cache
-  localparam integer unsigned AxiDataWidth     = `ifdef AXI_DATA_WIDTH `AXI_DATA_WIDTH `else 64 `endif;
+  localparam integer unsigned AxiDataWidth     = `ifdef AXI_DATA_WIDTH `AXI_DATA_WIDTH `else 1024 `endif;
   localparam integer unsigned AxiLiteDataWidth = 32;
 
   /***********************
@@ -69,7 +69,7 @@ package mempool_pkg;
   typedef logic [DataWidth-1:0] data_t;
   typedef logic [BeWidth-1:0] strb_t;
 
-  localparam integer unsigned       NumAXIMastersPerGroup = 4; //`ifdef AXI_MASTERS_PER_GROUP `AXI_MASTERS_PER_GROUP `else 1 `endif;;
+  localparam integer unsigned       NumAXIMastersPerGroup = 1; //`ifdef AXI_MASTERS_PER_GROUP `AXI_MASTERS_PER_GROUP `else 1 `endif;;
 
   localparam NumSystemXbarMasters = (NumGroups * NumAXIMastersPerGroup) + 1; // +1 because the external host is also a master
   localparam AxiSystemIdWidth = $clog2(NumSystemXbarMasters) + AxiTileIdWidth;
