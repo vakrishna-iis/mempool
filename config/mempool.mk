@@ -9,7 +9,7 @@
 ###############
 
 # Number of cores
-num_cores ?= 256
+num_cores ?= 64
 
 # Number of groups
 num_groups ?= 4
