@@ -346,7 +346,7 @@ module mempool_group
     .NumSlvPorts    (NumTilesPerGroup     ),
     .NumMstPorts    (NumAXIMastersPerGroup),
     .Radix          (AxiHierRadix         ),
-    .EnableCache    (32'hFFFFFFFF         ),
+    .EnableCache    (32'h00000000         ),
     .CacheLineWidth (ROCacheLineWidth     ),
     .CacheSizeByte  (ROCacheSizeByte      ),
     .CacheSets      (ROCacheSets          ),
