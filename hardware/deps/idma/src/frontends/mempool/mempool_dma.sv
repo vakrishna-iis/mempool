@@ -155,22 +155,58 @@ module mempool_dma #(
         transfer = 1;
         size = burst_req_o.num_bytes;
         str = $sformatf("[mempool_dma] Launch request of %08d bytes\n", size);
-        f = $fopen("dma.log", "a");
+        f = $fopen("dma_tb.log", "a");
         $fwrite(f, str);
         $fclose(f);
       end else begin
         cycle = cycle + 1;
       end
 
-      if (transfer == 1 && backend_idle_i == 0) begin
+      if (transfer == 1 && backend_idle_i == 0 && cycle >= 24) begin
         transfer = 2;
       end else if (transfer == 2 && backend_idle_i == 1 && cycle >= 24) begin
         transfer = 0;
         str = "[mempool_dma] Finished request\n";
         str = $sformatf("%s[mempool_dma] Duration: %08d cycles, %08.8f bytes/cycle\n", str, cycle, size/cycle);
-        f = $fopen("dma.log", "a");
+        f = $fopen("dma_tb.log", "a");
         $fwrite(f, str);
         $fclose(f);
+      end
+    end
+  end
+
+  integer cycle_tc;
+  integer transfer_tc;
+  integer size_tc;
+  integer f_tc;
+  string str_tc;
+
+  /* verilator lint_off BLKSEQ */
+  always_ff @(posedge clk_i or negedge rst_ni) begin
+    if (!rst_ni) begin
+      cycle_tc = 0;
+      size_tc = 0;
+      transfer_tc = 0;
+    end else begin
+      if (valid_o && ready_i) begin
+        cycle_tc = 0;
+        transfer_tc = 1;
+        size_tc = burst_req_o.num_bytes;
+        str_tc = $sformatf("[mempool_dma_tc] Launch request of %08d bytes\n", size_tc);
+        f_tc = $fopen("dma_tc.log", "a");
+        $fwrite(f_tc, str_tc);
+        $fclose(f_tc);
+      end else begin
+        cycle_tc = cycle_tc + 1;
+      end
+
+      if (transfer_tc == 1 && trans_complete_i == 1) begin
+        transfer_tc = 0;
+        str_tc = "[mempool_dma_tc] Finished request\n";
+        str_tc = $sformatf("%s[mempool_dma_tc] Duration: %08d cycles, %08.8f bytes/cycle\n", str_tc, cycle_tc, size_tc/cycle_tc);
+        f_tc = $fopen("dma_tc.log", "a");
+        $fwrite(f_tc, str_tc);
+        $fclose(f_tc);
       end
     end
   end
