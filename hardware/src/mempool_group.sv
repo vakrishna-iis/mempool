@@ -456,6 +456,9 @@ module mempool_group
   idma_distributed_midend #(
     .NoMstPorts     (NumDmasPerGroup                   ),
     .DmaRegionWidth (NumBanksPerGroup*4/NumDmasPerGroup),
+    .DmaRegionStart (32'h0000_0000                     ),
+    .DmaRegionEnd   (TCDMSize                          ),
+    .TransFifoDepth (2                                 ),
     .burst_req_t    (dma_req_t                         ),
     .meta_t         (dma_meta_t                        )
   ) i_idma_distributed_midend (
