@@ -20,9 +20,9 @@
 #define matrix_P 128
 
 // Define Benchmark Flag
-#define SERIAL_MODE (0)
-#define PARALLEL_MODE (1)
-#define CONCURRENT_MODE (0)
+#define SERIAL
+#define PARALLEL
+#define PARALLEL_CONCURRENT
 #define NUM_PARALLEL_CORES (1024)
 
 // Define kernel include
@@ -33,7 +33,7 @@
 int32_t matrix_a[matrix_M * matrix_N] __attribute__((section(".l1")));
 int32_t matrix_b[matrix_N * matrix_P] __attribute__((section(".l1")));
 int32_t matrix_c[matrix_M * matrix_P] __attribute__((section(".l1")));
-#if (CONCURRENT_MODE == 1)
+#if defined(PARALLEL_CONCURRENT)
 int32_t matrix_d[matrix_M * matrix_N] __attribute__((section(".l1")));
 int32_t matrix_e[matrix_N * matrix_P] __attribute__((section(".l1")));
 int32_t matrix_f[matrix_M * matrix_P] __attribute__((section(".l1")));
@@ -112,14 +112,14 @@ int test_matrix_multiplication(int32_t *__restrict__ A, int32_t *__restrict__ B,
   // Initialize Matrices
   init_matrix(A, M, N, A_a, A_b, A_c, core_id, num_cores);
   init_matrix(B, N, P, B_a, B_b, B_c, core_id, num_cores);
-#if (CONCURRENT_MODE == 1)
+#if defined(CONCURRENT)
   init_matrix(D, M, N, A_a, A_b, A_c, core_id, num_cores);
   init_matrix(E, N, P, B_a, B_b, B_c, core_id, num_cores);
 #endif
   mempool_barrier(num_cores);
 
 // Serial Benchmark
-#if (SERIAL_MODE == 1)
+#if defined(SERIAL)
   if (core_id == 0) {
     printf("Serial Calculation Start\n");
     mempool_start_benchmark();
@@ -130,7 +130,7 @@ int test_matrix_multiplication(int32_t *__restrict__ A, int32_t *__restrict__ B,
 #endif
 
 // Parallel Benchmark
-#if (PARALLEL_MODE == 1)
+#if defined(PARALLEL)
   if (core_id == 0) {
     printf("Parallel Calculation Start\n");
   }
@@ -148,7 +148,7 @@ int test_matrix_multiplication(int32_t *__restrict__ A, int32_t *__restrict__ B,
 #endif
 
 // Concurrent Benchmark
-#if (CONCURRENT_MODE == 1)
+#if defined(PARALLEL_CONCURRENT)
   if (core_id == 0) {
     printf("Concurrent Calculation Start\n");
   }
