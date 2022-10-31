@@ -13,7 +13,7 @@
    TEST2 Single-Core system inversion --> #define SINGLE #define LINSOLVER
    TEST3 Parallel Cholesky decomposition --> #define PARALLEL
    TEST4 Parallel folded Cholesky decomposition --> #define FOLDED
-   TEST5 Parallel folded system inversion --> #define FOLDED LINSOLVER */
+   TEST5 Parallel folded system inversion --> #define FOLDED #define LINSOLVER */
 
 //#define SINGLE
 //#define PARALLEL

@@ -20,10 +20,10 @@
 #define matrix_P 128
 
 // Define Benchmark Flag
-#define SERIAL
-#define PARALLEL
-#define PARALLEL_CONCURRENT
-#define NUM_PARALLEL_CORES (1024)
+//#define SERIAL
+//#define PARALLEL
+//#define PARALLEL_CONCURRENT
+//#define NUM_PARALLEL_CORES (1024)
 
 // Define kernel include
 #include "kernel/mat_mul.h"
@@ -98,10 +98,19 @@ int verify_matrix(int32_t *matrix, uint32_t num_rows, uint32_t num_columns,
 }
 
 // Function test_matrix_multiplication
+#if defined(PARALLEL_CONCURRENT)
+int test_matrix_multiplication(int32_t *__restrict__ A, int32_t *__restrict__ B,
+                               int32_t *__restrict__ C, int32_t *__restrict__ D,
+                               int32_t *__restrict__ E, int32_t *__restrict__ F,
+                               uint32_t M, uint32_t N, uint32_t P,
+                               uint32_t core_id, uint32_t num_cores) {
+#else
 int test_matrix_multiplication(int32_t *__restrict__ A, int32_t *__restrict__ B,
                                int32_t *__restrict__ C, uint32_t M, uint32_t N,
                                uint32_t P, uint32_t core_id,
                                uint32_t num_cores) {
+#endif
+
   int32_t const A_a = 1;
   int32_t const A_b = 2;
   int32_t const A_c = -32;
@@ -112,7 +121,7 @@ int test_matrix_multiplication(int32_t *__restrict__ A, int32_t *__restrict__ B,
   // Initialize Matrices
   init_matrix(A, M, N, A_a, A_b, A_c, core_id, num_cores);
   init_matrix(B, N, P, B_a, B_b, B_c, core_id, num_cores);
-#if defined(CONCURRENT)
+#if defined(PARALLEL_CONCURRENT)
   init_matrix(D, M, N, A_a, A_b, A_c, core_id, num_cores);
   init_matrix(E, N, P, B_a, B_b, B_c, core_id, num_cores);
 #endif
@@ -198,9 +207,15 @@ int main() {
     error = 0;
   }
 
-  // Test the Matrix multiplication
+// Test the Matrix multiplication
+#if defined(PARALLEL_CONCURRENT)
+  test_matrix_multiplication(matrix_a, matrix_b, matrix_c, matrix_d, matrix_e,
+                             matrix_f, matrix_M, matrix_N, matrix_P, core_id,
+                             num_cores);
+#else
   test_matrix_multiplication(matrix_a, matrix_b, matrix_c, matrix_M, matrix_N,
                              matrix_P, core_id, num_cores);
+#endif
   // wait until all cores have finished
   mempool_barrier(num_cores);
 

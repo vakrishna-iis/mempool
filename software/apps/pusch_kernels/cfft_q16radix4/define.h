@@ -24,7 +24,7 @@
 #define N_RSAMPLES (2 * N_CSAMPLES)
 
 #define ASM             // Use asm_volatile statements
-#define BITREVERSETABLE // Use LUTs for botreversal
+#define XPULP           // Use xpulpimg extensions
 #define BIT_REV 1       // Apply bitreversal permutations
 
 /* CHOOSE ONE */
@@ -37,23 +37,19 @@
    twiddles */
 
 // #define SINGLE
-// #define XPULP
 // #define PRINT_SINGLE
 
 // #define PARALLEL
 // #define PRINT_PARALLEL
 
 // #define FOLDED
-// #define FOLDED_TWIDDLES
+// #define FOLDED_TWIDDLES // Fold twiddles during computation
+// #define BITREVERSETABLE // Use LUTs for bitreversal
 // #define PRINT_FOLDED
 
 /* DATA */
-#define N_BANKS (1024)
+#define N_BANKS (NUM_CORES * 4)
 #define N_TWIDDLES (3 * N_CSAMPLES / 4)
-
-dump(ic, 1);
-dump(ic_2, 2);
-dump(ic_3, 3);
 
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 #define MAX(x, y) (((x) < (y)) ? (y) : (x))
