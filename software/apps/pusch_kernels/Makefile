@@ -41,6 +41,14 @@ update_opcodes: ## Update the RISCV opcodes.
 .PHONY: clean, runrtl
 
 runrtl: ## Run RTL simulation and tracing. Average performance are printed after tracing.
+ifeq ($(app),)
+	$(warning " WARNING: You need to specify the app that you want to run!")
+		app =
+endif
+ifeq ($(simulator),)
+	$(warning " WARNING: You need to specify the simulator that you want to run!")
+		simulator =
+endif
 	make -C $(HARDWARE_DIR) $(simulator)
 	make -C $(HARDWARE_DIR) trace
 
@@ -63,48 +71,49 @@ ifeq ($(app),cfft_q16radix4)
 	@awk 'BEGIN { printf "\n Defines in FFT kernel:"; \
 								printf "\n \t Choose one of the possible test options between TEST_64, TEST_256, TEST_1024 and TEST_4096"; \
 								printf "\n \t E.g. to compile an FFT on 64 points DEFINES+=-DTEST_64 make cfft_q16radix4\n"; \
-								printf "\n \t DEFINES+=-DSINGLE            --> single-core"; \
-								printf "\n \t DEFINES+=-DPARALLEL          --> trivial parallelization without folding"; \
-								printf "\n \t DEFINES+=-DFOLDED            --> parallel kernel with folding of input data"; \
-								printf "\n \t DEFINES+=-DFOLDED_TWIDDLES   --> folding of twiddles"; \
-								printf "\n \t DEFINES+=-DBITREVERSAL       --> LUTs are used for bitreversal"; \
-								printf "\n \t DEFINES+=-DPRINT_PARALLEL    --> Print result of parallel execution"; \
-								printf "\n \t DEFINES+=-DPRINT_FOLDED      --> Print result of parallel-folded execution"; \
-								printf "\n \t DEFINES+=-DPRINT_SINGLE      --> Print result of parallel execution\n\n";}'
+								printf "\n \t DEFINES=\x27-DSINGLE\x27            --> single-core"; \
+								printf "\n \t DEFINES=\x27-DPARALLEL\x27          --> trivial parallelization without folding"; \
+								printf "\n \t DEFINES=\x27-DFOLDED\x27            --> parallel kernel with folding of input data"; \
+								printf "\n \t DEFINES=\x27-DFOLDED_TWIDDLES\x27   --> folding of twiddles"; \
+								printf "\n \t DEFINES=\x27-COMPUTE_BITREV\x27     --> LUTs are not used for bitreversal"; \
+								printf "\n \t DEFINES=\x27-DPRINT_PARALLEL\x27    --> Print result of parallel execution"; \
+								printf "\n \t DEFINES=\x27-DPRINT_FOLDED\x27      --> Print result of parallel-folded execution"; \
+								printf "\n \t DEFINES=\x27-DPRINT_SINGLE\x27      --> Print result of parallel execution\n\n";}'
 endif
 ifeq ($(app),cfft_q16radix4_schedule)
 	@awk 'BEGIN { printf "\n Defines in FFT kernel scheduled over subsets of the cluster:"; \
 								printf "\n \t Choose one of the possible test options between TEST_64, TEST_256, TEST_1024 and TEST_4096"; \
 								printf "\n \t E.g. to compile an FFT on 64 points DEFINES+=-DTEST_64 make cfft_q16radix4\n"; \
-								printf "\n \t DEFINES+=-DSINGLE            --> single-core"; \
-								printf "\n \t DEFINES+=-DN_FFTs=X          --> single-core FFT iterates X times"; \
-								printf "\n \t DEFINES+=-DPARALLEL          --> parallel kernel with folding of input data"; \
-								printf "\n \t DEFINES+=-DN_FFTs_ROW=X      --> X fine-grained parallelized FFTs are instantiated in parallel on the cluster"; \
-								printf "\n \t DEFINES+=-DN_FFTs_COL=Y      --> Y fine-grained parallelized FFTs are run serially on a sub-set of cores\n\n";}'
+								printf "\n \t DEFINES=\x27-DSINGLE\x27            --> single-core"; \
+								printf "\n \t DEFINES=\x27-DN_FFTs=X\x27          --> single-core FFT iterates X times"; \
+								printf "\n \t DEFINES=\x27-DPARALLEL\x27          --> parallel kernel with folding of input data"; \
+								printf "\n \t DEFINES=\x27-COMPUTE_BITREV\x27     --> LUTs are not used for bitreversal"; \
+								printf "\n \t DEFINES=\x27-DN_FFTs_ROW=X\x27      --> X fine-grained parallelized FFTs are instantiated in parallel on the cluster"; \
+								printf "\n \t DEFINES=\x27-DN_FFTs_COL=Y\x27      --> Y fine-grained parallelized FFTs are run serially on a sub-set of cores\n\n";}'
 endif
 ifeq ($(app),choldec)
 	@awk 'BEGIN { printf "\n Defines in Cholesky decomposition kernel:"; \
-								printf "\n \t DEFINES+=-DSINGLE            --> single-core"; \
-								printf "\n \t DEFINES+=-DPARALLEL          --> parallel kernel without folding of input data"; \
-								printf "\n \t DEFINES+=-DFOLDED            --> parallel kernel with folding of input data"; \
-								printf "\n \t DEFINES+=-DLINSOLVER         --> Solve the inversion of a full linear system Ax=b"; \
-								printf "\n \t DEFINES+=-DN=X               --> Dimension of the matrix to be decomposed\n\n";}'
+								printf "\n \t DEFINES=\x27-DSINGLE\x27            --> single-core"; \
+								printf "\n \t DEFINES=\x27-DPARALLEL\x27          --> parallel kernel without folding of input data"; \
+								printf "\n \t DEFINES=\x27-DFOLDED\x27            --> parallel kernel with folding of input data"; \
+								printf "\n \t DEFINES=\x27-DLINSOLVER\x27         --> Solve the inversion of a full linear system Ax=b"; \
+								printf "\n \t DEFINES=\x27-DN=X\x27               --> Dimension of the matrix to be decomposed\n\n";}'
 endif
 ifeq ($(app),choldec_schedule)
 	@awk 'BEGIN { printf "\n Defines in Cholesky decomposition kernel scheduled over subsets of the cluster:"; \
-								printf "\n \t DEFINES+=-DSINGLE            --> single-core"; \
-								printf "\n \t DEFINES+=-DN_DEC=X           --> single-core FFT iterates X times"; \
-								printf "\n \t DEFINES+=-DPARALLEL          --> parallel kernel with folding of input data"; \
-								printf "\n \t DEFINES+=-DLINSOLVER         --> Solve the inversion of a full linear system Ax=b"; \
-								printf "\n \t DEFINES+=-DN_ROW=X           --> X fine-grained parallelized FFTs are instantiated in parallel on the cluster"; \
-								printf "\n \t DEFINES+=-DN_COL=Y           --> Y fine-grained parallelized FFTs are run serially on a sub-set of cores"; \
-								printf "\n \t DEFINES+=-DN=X               --> Dimension of the matrix to be decomposed\n\n";}'
+								printf "\n \t DEFINES=\x27-DSINGLE\x27            --> single-core"; \
+								printf "\n \t DEFINES=\x27-DN_DEC=X\x27           --> single-core FFT iterates X times"; \
+								printf "\n \t DEFINES=\x27-DPARALLEL\x27          --> parallel kernel with folding of input data"; \
+								printf "\n \t DEFINES=\x27-DLINSOLVER\x27         --> Solve the inversion of a full linear system Ax=b"; \
+								printf "\n \t DEFINES=\x27-DN_ROW=X\x27           --> X fine-grained parallelized FFTs are instantiated in parallel on the cluster"; \
+								printf "\n \t DEFINES=\x27-DN_COL=Y\x27           --> Y fine-grained parallelized FFTs are run serially on a sub-set of cores"; \
+								printf "\n \t DEFINES=\x27-DN=X\x27               --> Dimension of the matrix to be decomposed\n\n";}'
 endif
 ifeq ($(app),matmul_i32_conflict_opt)
 	@awk 'BEGIN { printf "\n Defines in matrix multiplication kernel:"; \
-								printf "\n \t DEFINES+=-DSINGLE               --> single-core"; \
-								printf "\n \t DEFINES+=-DPARALLEL             --> parallel kernel with folding of input data"; \
-								printf "\n \t DEFINES+=-DPARALLEL_CONCURRENT  --> parallel kernel with folding of input data\n\n";}'
+								printf "\n \t DEFINES=\x27-DSINGLE\x27               --> single-core"; \
+								printf "\n \t DEFINES=\x27-DPARALLEL\x27             --> parallel kernel with folding of input data"; \
+								printf "\n \t DEFINES=\x27-DPARALLEL_CONCURRENT\x27  --> parallel kernel with folding of input data\n\n";}'
 endif
 
 .INTERMEDIATE: $(addsuffix /main.c.o,$(APPS))
