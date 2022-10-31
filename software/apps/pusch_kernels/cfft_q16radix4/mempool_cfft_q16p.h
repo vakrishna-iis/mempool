@@ -36,13 +36,7 @@ void mempool_cfft_q16p(uint16_t fftLen, int16_t *pTwiddle,
   }
 
   if (bitReverseFlag) {
-#ifndef BITREVERSETABLE
-    mempool_bitrev_q16p_xpulpimg((uint16_t *)pSrc, (uint16_t *)pDst, fftLen,
-                                 nPE);
-#else
-    mempool_bitrev_q16p_xpulpimg((uint16_t *)pSrc, bitReverseLen, pBitRevTable,
-                                 nPE);
-#endif
+    mempool_bitrev_q16p_xpulpimg((uint16_t *)pSrc, bitReverseLen, pBitRevTable, nPE);
   }
 }
 

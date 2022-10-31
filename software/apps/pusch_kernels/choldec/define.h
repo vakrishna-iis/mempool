@@ -6,9 +6,6 @@
 
 #define N_BANKS (NUM_CORES * 4)
 
-/* Dimension of the input matrix */
-//#define N 4
-
 /* TEST1 Single-Core Colesky decomposition --> #define SINGLE
    TEST2 Single-Core system inversion --> #define SINGLE #define LINSOLVER
    TEST3 Parallel Cholesky decomposition --> #define PARALLEL
@@ -16,10 +13,17 @@
    TEST5 Parallel folded system inversion --> #define FOLDED #define LINSOLVER
  */
 
+#if ~(defined(SINGLE) || defined(PARALLEL) || defined(FOLDED))
+#define SINGLE
 //#define SINGLE
 //#define PARALLEL
 //#define FOLDED
 //#define LINSOLVER
+#endif
+#if ~(defined N)
+/* Dimension of the input matrix */
+#define N (4)
+#endif
 
 /* All the versions follow Crout algorithm. For the single-core version
    Banachievitz is implemented too. #define BANACHIEWITZ or #define CROUT*/

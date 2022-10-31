@@ -15,10 +15,20 @@
    TEST5 Two parallel matrix-matrix multiplications
    run over half of the cores, concurrently --> #define PARALLEL_CONCURRENT */
 
+#if !(defined(SINGLE) || defined(PARALLEL) || defined(PARALLEL_CONCURRENT))
+#define SINGLE
 //#define SINGLE
 //#define PARALLEL
 //#define PARALLEL_CONCURRENT
+#endif
 
+#if !(defined(matrix_M) && defined(matrix_N) && defined(matrix_P))
+#define matrix_M (128)
+#define matrix_N (64)
+#define matrix_P (128)
+#endif
+
+#if !(defined(NUM_PARALLEL_CORES))
 /* Sets the number of cores that are used to run the parallel kernel */
-
-//#define NUM_PARALLEL_CORES (1024)
+#define NUM_PARALLEL_CORES (256)
+#endif

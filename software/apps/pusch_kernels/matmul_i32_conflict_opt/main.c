@@ -118,7 +118,7 @@ int test_matrix_multiplication(int32_t *__restrict__ A, int32_t *__restrict__ B,
   mempool_barrier(num_cores);
 
 // Serial Benchmark
-#if defined(SERIAL)
+#if defined(SINGLE)
   if (core_id == 0) {
     printf("Serial Calculation Start\n");
     mempool_start_benchmark();

@@ -6,22 +6,25 @@
 
 #define N_BANKS (NUM_CORES * 4)
 
-/* Matrix dimension */
-//#define N 4
-
 /* TEST1 Single-Core Colesky decomposition --> #define SINGLE
    TEST2 Single-Core system inversion --> #define SINGLE #define LINSOLVER
    TEST4 Parallel folded Cholesky decomposition --> #define PARALLEL
    TEST5 Parallel folded system inversion --> #define PARALLEL #define LINSOLVER
  */
 
+#if !(defined(SINGLE) || defined(PARALLEL))
+#define SINGLE
+#define N_DEC 1
 //#define SINGLE
 //#define PARALLEL
 //#define LINSOLVER
-
 //#define N_COL 1024
 //#define N_ROW 1
-//#define N_DEC 2
+#endif
+#if !(defined N)
+/* Dimension of the input matrix */
+#define N (4)
+#endif
 
 int32_t A_matrix[N * N] __attribute__((aligned(N_BANKS), section(".l1")));
 int32_t AT_matrix[N * N] __attribute__((aligned(N_BANKS), section(".l1")));

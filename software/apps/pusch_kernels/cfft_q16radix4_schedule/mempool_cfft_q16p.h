@@ -193,7 +193,7 @@ static void mempool_cfft_q16p(uint32_t col_id, int16_t *pSrc, int16_t *pDst,
   /* BITREVERSAL */
   if (bitReverseFlag) {
     mempool_log_partial_barrier(2, absolute_core_id, nPE);
-#if BITREVERSE_TABLE
+#ifndef COMPUTE_BITREV
     pSrc = pSrc + col_id * fftLen;
     for (j = 2 * core_id; j < bitReverseLen; j += 2 * nPE) {
       v2s addr, tmpa, tmpb;

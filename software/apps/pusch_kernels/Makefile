@@ -52,10 +52,17 @@ clean: ## Clean the bin folder.
 	rm -vf $(LINKER_SCRIPT)
 
 help:
-	@awk 'BEGIN { printf "\n Makefile targets: \n\n";}'
+	@awk 'BEGIN { printf "\n TIPS:"; \
+								printf "\n -- Apps can be compiled with `make` followed by the name of the app."; \
+								printf "\n -- To specify which test has to be run specify the required `#define` directives before compiling the application"; \
+								printf "\n -- For each app `app=name_app make help` shows the possible alternatives.\n"; \
+								printf "\n Makefile targets: \n";}'
 	@egrep -h '\s##\s' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m  %-30s:\033[0m %s\n", $$1, $$2}'
+	@awk 'BEGIN { printf "\n";}'
 ifeq ($(app),cfft_q16radix4)
 	@awk 'BEGIN { printf "\n Defines in FFT kernel:"; \
+								printf "\n \t Choose one of the possible test options between TEST_64, TEST_256, TEST_1024 and TEST_4096"; \
+								printf "\n \t E.g. to compile an FFT on 64 points DEFINES+=-DTEST_64 make cfft_q16radix4\n"; \
 								printf "\n \t DEFINES+=-DSINGLE            --> single-core"; \
 								printf "\n \t DEFINES+=-DPARALLEL          --> trivial parallelization without folding"; \
 								printf "\n \t DEFINES+=-DFOLDED            --> parallel kernel with folding of input data"; \
@@ -67,6 +74,8 @@ ifeq ($(app),cfft_q16radix4)
 endif
 ifeq ($(app),cfft_q16radix4_schedule)
 	@awk 'BEGIN { printf "\n Defines in FFT kernel scheduled over subsets of the cluster:"; \
+								printf "\n \t Choose one of the possible test options between TEST_64, TEST_256, TEST_1024 and TEST_4096"; \
+								printf "\n \t E.g. to compile an FFT on 64 points DEFINES+=-DTEST_64 make cfft_q16radix4\n"; \
 								printf "\n \t DEFINES+=-DSINGLE            --> single-core"; \
 								printf "\n \t DEFINES+=-DN_FFTs=X          --> single-core FFT iterates X times"; \
 								printf "\n \t DEFINES+=-DPARALLEL          --> parallel kernel with folding of input data"; \

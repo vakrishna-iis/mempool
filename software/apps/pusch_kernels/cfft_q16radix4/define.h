@@ -5,8 +5,10 @@
 // Author: Marco Bertuletti, ETH Zurich
 
 /* DEFINES */
-
+#if !(defined(TEST_64) || defined(TEST_256) || defined(TEST_1024) ||           \
+      defined(TEST_4096))
 #define TEST_64
+#endif
 
 #if defined(TEST_64)
 #define N_CSAMPLES (64)
@@ -21,7 +23,10 @@
 #define N_CSAMPLES (4096)
 #define LOG2 (12)
 #endif
+
 #define N_RSAMPLES (2 * N_CSAMPLES)
+#define N_TWIDDLES (3 * N_CSAMPLES / 4)
+#define N_BANKS (NUM_CORES * 4)
 
 #define ASM       // Use asm_volatile statements
 #define XPULP     // Use xpulpimg extensions
@@ -35,6 +40,8 @@
    FOLDED_TWIDDLES --> Folding of twiddles
    BITREVERSETABLE --> LUTs are used for bitreversal */
 
+#if !(defined(SINGLE) || defined(PARALLEL) || defined(FOLDED))
+#define SINGLE
 // #define SINGLE
 // #define PRINT_SINGLE
 
@@ -43,12 +50,9 @@
 
 // #define FOLDED
 // #define FOLDED_TWIDDLES // Fold twiddles during computation
-// #define BITREVERSETABLE // Use LUTs for bitreversal
+// #define COMPUTE_BITREV  // Don't use LUT for bitreversal
 // #define PRINT_FOLDED
-
-/* DATA */
-#define N_BANKS (NUM_CORES * 4)
-#define N_TWIDDLES (3 * N_CSAMPLES / 4)
+#endif
 
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 #define MAX(x, y) (((x) < (y)) ? (y) : (x))
