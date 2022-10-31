@@ -13,17 +13,7 @@
 #include "runtime.h"
 #include "synchronization.h"
 
-// Define Matrix dimensions:
-// C = AB with A=[MxN], B=[NxP], C=[MxP]
-#define matrix_M 128
-#define matrix_N 64
-#define matrix_P 128
-
-// Define Benchmark Flag
-//#define SERIAL
-//#define PARALLEL
-//#define PARALLEL_CONCURRENT
-//#define NUM_PARALLEL_CORES (1024)
+#include "define.h"
 
 // Define kernel include
 #include "kernel/mat_mul.h"

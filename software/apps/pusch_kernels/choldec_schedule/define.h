@@ -7,7 +7,13 @@
 #define N_BANKS (NUM_CORES * 4)
 
 /* Matrix dimension */
-#define N 4
+//#define N 4
+
+/* TEST1 Single-Core Colesky decomposition --> #define SINGLE
+   TEST2 Single-Core system inversion --> #define SINGLE #define LINSOLVER
+   TEST4 Parallel folded Cholesky decomposition --> #define PARALLEL
+   TEST5 Parallel folded system inversion --> #define PARALLEL #define LINSOLVER
+ */
 
 //#define SINGLE
 //#define PARALLEL

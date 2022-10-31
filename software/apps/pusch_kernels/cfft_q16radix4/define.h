@@ -23,18 +23,17 @@
 #endif
 #define N_RSAMPLES (2 * N_CSAMPLES)
 
-#define ASM             // Use asm_volatile statements
-#define XPULP           // Use xpulpimg extensions
-#define BIT_REV 1       // Apply bitreversal permutations
+#define ASM       // Use asm_volatile statements
+#define XPULP     // Use xpulpimg extensions
+#define BIT_REV 1 // Apply bitreversal permutations
 
 /* CHOOSE ONE */
 
-/* SINGLE         --> plain single-core
-   SINGLE + XPULP --> single-core with XPULP extensions
-   PARALLEL       --> trivial parallelization without folding
-   FOLDED         --> parallel kernel with folding of input data
-   FOLDED + FOLDED_TWIDDLES --> parallel kernel with folding of input data and
-   twiddles */
+/* SINGLE          --> plain single-core
+   PARALLEL        --> trivial parallelization without folding
+   FOLDED          --> parallel kernel with folding of input data
+   FOLDED_TWIDDLES --> Folding of twiddles
+   BITREVERSETABLE --> LUTs are used for bitreversal */
 
 // #define SINGLE
 // #define PRINT_SINGLE
