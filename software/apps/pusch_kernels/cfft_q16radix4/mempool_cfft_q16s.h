@@ -4,13 +4,13 @@
 
 // Author: Marco Bertuletti, ETH Zurich
 
-static void mempool_cfft_q16s(uint16_t fftLen, int16_t *pTwiddle,
-                              uint16_t *pBitRevTable, int16_t *pSrc,
-                              uint16_t bitReverseLen, uint8_t ifftFlag,
-                              uint8_t bitReverseFlag);
+void mempool_cfft_q16s(uint16_t fftLen, int16_t *pTwiddle,
+                       uint16_t *pBitRevTable, int16_t *pSrc,
+                       uint16_t bitReverseLen, uint8_t ifftFlag,
+                       uint8_t bitReverseFlag);
 
-static void mempool_cfft_radix4by2_q16s(int16_t *pSrc, uint32_t fftLen,
-                                        const int16_t *pCoef);
+void mempool_cfft_radix4by2_q16s(int16_t *pSrc, uint32_t fftLen,
+                                 const int16_t *pCoef);
 
 #ifndef XPULP
 

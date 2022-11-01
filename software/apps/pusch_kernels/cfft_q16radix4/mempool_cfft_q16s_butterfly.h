@@ -4,15 +4,13 @@
 
 // Author: Marco Bertuletti, ETH Zurich
 
-static void mempool_radix4_butterfly_q16s_riscv32(int16_t *pSrc16,
-                                                  uint32_t fftLen,
-                                                  int16_t *pCoef16,
-                                                  uint32_t twidCoefModifier);
+void mempool_radix4_butterfly_q16s_riscv32(int16_t *pSrc16, uint32_t fftLen,
+                                           int16_t *pCoef16,
+                                           uint32_t twidCoefModifier);
 
-static void mempool_radix4_butterfly_q16s_xpulpimg(int16_t *pSrc16,
-                                                   uint32_t fftLen,
-                                                   int16_t *pCoef16,
-                                                   uint32_t twidCoefModifier);
+void mempool_radix4_butterfly_q16s_xpulpimg(int16_t *pSrc16, uint32_t fftLen,
+                                            int16_t *pCoef16,
+                                            uint32_t twidCoefModifier);
 
 static inline void radix4_butterfly_first(int16_t *pIn, uint32_t i0,
                                           uint32_t n2, v2s CoSi1, v2s CoSi2,
@@ -25,9 +23,9 @@ static inline void radix4_butterfly_middle(int16_t *pIn, uint32_t i0,
 static inline void radix4_butterfly_last(int16_t *pIn, uint32_t i0,
                                          uint32_t n2);
 
-static void mempool_radix4_butterfly_q16s_riscv32(int16_t *pIn, uint32_t fftLen,
-                                                  int16_t *pCoef16,
-                                                  uint32_t twidCoefModifier) {
+void mempool_radix4_butterfly_q16s_riscv32(int16_t *pIn, uint32_t fftLen,
+                                           int16_t *pCoef16,
+                                           uint32_t twidCoefModifier) {
 
   int16_t R0, R1, S0, S1, T0, T1, U0, U1;
   int16_t Co1, Si1, Co2, Si2, Co3, Si3, out1, out2;
@@ -317,10 +315,9 @@ static void mempool_radix4_butterfly_q16s_riscv32(int16_t *pIn, uint32_t fftLen,
   /* END OF LAST STAGE PROCESSING */
 }
 
-static void mempool_radix4_butterfly_q16s_xpulpimg(int16_t *pSrc16,
-                                                   uint32_t fftLen,
-                                                   int16_t *pCoef16,
-                                                   uint32_t twidCoefModifier) {
+void mempool_radix4_butterfly_q16s_xpulpimg(int16_t *pSrc16, uint32_t fftLen,
+                                            int16_t *pCoef16,
+                                            uint32_t twidCoefModifier) {
 
   v2s CoSi1, CoSi2, CoSi3;
   v2s C1, C2, C3;

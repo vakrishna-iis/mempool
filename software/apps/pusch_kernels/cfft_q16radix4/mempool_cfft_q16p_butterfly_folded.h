@@ -37,14 +37,13 @@ static inline void fold_radix4(int16_t *pSrc16, uint32_t fftLen, uint32_t nPE) {
 }
 
 #ifdef FOLDED_TWIDDLES
-static inline void
-mempool_butterfly_q16p_folded(int16_t *pSrc16, int16_t *pDst16, uint32_t fftLen,
-                              int16_t *pCoef_src, int16_t *pCoef_dst,
-                              uint32_t nPE);
+void mempool_butterfly_q16p_folded(int16_t *pSrc16, int16_t *pDst16,
+                                   uint32_t fftLen, int16_t *pCoef_src,
+                                   int16_t *pCoef_dst, uint32_t nPE);
 #else
-static inline void
-mempool_butterfly_q16p_folded(int16_t *pSrc16, int16_t *pDst16, uint32_t fftLen,
-                              int16_t *pCoef_src, uint32_t nPE);
+void mempool_butterfly_q16p_folded(int16_t *pSrc16, int16_t *pDst16,
+                                   uint32_t fftLen, int16_t *pCoef_src,
+                                   uint32_t nPE);
 #endif
 
 static inline void radix4_butterfly_first(int16_t *pIn, int16_t *pOut,
@@ -73,9 +72,9 @@ static inline void radix4_butterfly_last(int16_t *pIn, int16_t *pOut,
   @param[in]     nPE Number of PE
   @return        none
 */
-static void mempool_butterfly_q16p_folded(int16_t *pSrc16, int16_t *pDst16,
-                                          uint32_t fftLen, int16_t *pCoef_src,
-                                          int16_t *pCoef_dst, uint32_t nPE) {
+void mempool_butterfly_q16p_folded(int16_t *pSrc16, int16_t *pDst16,
+                                   uint32_t fftLen, int16_t *pCoef_src,
+                                   int16_t *pCoef_dst, uint32_t nPE) {
   uint32_t core_id = mempool_get_core_id();
   v2s CoSi1, CoSi2, CoSi3;
   v2s C1, C2, C3;
@@ -214,9 +213,9 @@ static void mempool_butterfly_q16p_folded(int16_t *pSrc16, int16_t *pDst16,
   @param[in]     nPE Number of PE
   @return        none
 */
-static void mempool_butterfly_q16p_folded(int16_t *pSrc16, int16_t *pDst16,
-                                          uint32_t fftLen, int16_t *pCoef_src,
-                                          uint32_t nPE) {
+void mempool_butterfly_q16p_folded(int16_t *pSrc16, int16_t *pDst16,
+                                   uint32_t fftLen, int16_t *pCoef_src,
+                                   uint32_t nPE) {
   uint32_t core_id = mempool_get_core_id();
   v2s CoSi1, CoSi2, CoSi3;
   v2s C1, C2, C3;

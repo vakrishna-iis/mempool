@@ -4,11 +4,10 @@
 
 // Author: Marco Bertuletti, ETH Zurich
 
-static void mempool_cfft_q16p(uint32_t col_id, int16_t *pSrc, int16_t *pDst,
-                              uint32_t fftLen, int16_t *pCoef_src,
-                              int16_t *pCoef_dst, uint16_t *pBitRevTable,
-                              uint16_t bitReverseLen, uint8_t bitReverseFlag,
-                              uint32_t nPE);
+void mempool_cfft_q16p(uint32_t col_id, int16_t *pSrc, int16_t *pDst,
+                       uint32_t fftLen, int16_t *pCoef_src, int16_t *pCoef_dst,
+                       uint16_t *pBitRevTable, uint16_t bitReverseLen,
+                       uint8_t bitReverseFlag, uint32_t nPE);
 
 static inline void radix4_butterfly_first(int16_t *pIn, int16_t *pOut,
                                           uint32_t i0, uint32_t n2_store,
@@ -25,12 +24,10 @@ static inline void radix4_butterfly_last(int16_t *pIn, int16_t *pOut,
                                          uint32_t i0, uint32_t col_id,
                                          uint32_t fftLen);
 
-static void mempool_cfft_columnwrapper(int16_t *pSrc, int16_t *pDst,
-                                       uint32_t fftLen, int16_t *pCoef_src,
-                                       int16_t *pCoef_dst,
-                                       uint16_t *pBitRevTable,
-                                       uint16_t bitReverseLen,
-                                       uint8_t bitReverseFlag, uint32_t nPE) {
+void mempool_cfft_columnwrapper(int16_t *pSrc, int16_t *pDst, uint32_t fftLen,
+                                int16_t *pCoef_src, int16_t *pCoef_dst,
+                                uint16_t *pBitRevTable, uint16_t bitReverseLen,
+                                uint8_t bitReverseFlag, uint32_t nPE) {
   uint32_t col_fftLen = fftLen >> 2U;
   uint32_t core_id = mempool_get_core_id();
   uint32_t col_id = core_id / (fftLen >> 4U);
@@ -44,11 +41,10 @@ static void mempool_cfft_columnwrapper(int16_t *pSrc, int16_t *pDst,
   mempool_log_partial_barrier(2, core_id, N_FFTs_COL * (N_CSAMPLES >> 4U));
 }
 
-static void mempool_cfft_q16p(uint32_t col_id, int16_t *pSrc, int16_t *pDst,
-                              uint32_t fftLen, int16_t *pCoef_src,
-                              int16_t *pCoef_dst, uint16_t *pBitRevTable,
-                              uint16_t bitReverseLen, uint8_t bitReverseFlag,
-                              uint32_t nPE) {
+void mempool_cfft_q16p(uint32_t col_id, int16_t *pSrc, int16_t *pDst,
+                       uint32_t fftLen, int16_t *pCoef_src, int16_t *pCoef_dst,
+                       uint16_t *pBitRevTable, uint16_t bitReverseLen,
+                       uint8_t bitReverseFlag, uint32_t nPE) {
   uint32_t absolute_core_id = mempool_get_core_id();
   uint32_t core_id = absolute_core_id % (fftLen >> 4U);
 

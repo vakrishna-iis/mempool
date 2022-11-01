@@ -4,16 +4,13 @@
 
 // Author: Marco Bertuletti, ETH Zurich
 
-static void mempool_bitrev_q16s_riscv32(uint16_t *pSrc,
-                                        const uint16_t bitRevLen,
-                                        const uint16_t *pBitRevTab);
-static void mempool_bitrev_q16s_xpulpimg(uint16_t *pSrc,
-                                         const uint16_t bitRevLen,
-                                         const uint16_t *pBitRevTab);
+void mempool_bitrev_q16s_riscv32(uint16_t *pSrc, const uint16_t bitRevLen,
+                                 const uint16_t *pBitRevTab);
+void mempool_bitrev_q16s_xpulpimg(uint16_t *pSrc, const uint16_t bitRevLen,
+                                  const uint16_t *pBitRevTab);
 
-static void mempool_bitrev_q16s_riscv32(uint16_t *pSrc,
-                                        const uint16_t bitRevLen,
-                                        const uint16_t *pBitRevTab) {
+void mempool_bitrev_q16s_riscv32(uint16_t *pSrc, const uint16_t bitRevLen,
+                                 const uint16_t *pBitRevTab) {
   uint16_t addr1, addr2;
   uint16_t tmpa, tmpb;
   for (uint32_t i = 0; i < bitRevLen; i += 2) {
@@ -26,9 +23,8 @@ static void mempool_bitrev_q16s_riscv32(uint16_t *pSrc,
   }
 }
 
-static void mempool_bitrev_q16s_xpulpimg(uint16_t *pSrc,
-                                         const uint16_t bitRevLen,
-                                         const uint16_t *pBitRevTab) {
+void mempool_bitrev_q16s_xpulpimg(uint16_t *pSrc, const uint16_t bitRevLen,
+                                  const uint16_t *pBitRevTab) {
 
 #ifndef ASM
   v2s addr1, addr2, addr3, addr4;
@@ -123,13 +119,11 @@ static void mempool_bitrev_q16s_xpulpimg(uint16_t *pSrc,
 
 #ifdef COMPUTE_BITREV
 
-static void mempool_bitrev_q16p_xpulpimg(uint16_t *pSrc, uint16_t *pDst,
-                                         const uint16_t fftLen,
-                                         const uint32_t nPE);
+void mempool_bitrev_q16p_xpulpimg(uint16_t *pSrc, uint16_t *pDst,
+                                  const uint16_t fftLen, const uint32_t nPE);
 
-static void mempool_bitrev_q16p_xpulpimg(uint16_t *pSrc, uint16_t *pDst,
-                                         const uint16_t fftLen,
-                                         const uint32_t nPE) {
+void mempool_bitrev_q16p_xpulpimg(uint16_t *pSrc, uint16_t *pDst,
+                                  const uint16_t fftLen, const uint32_t nPE) {
   uint32_t core_id = mempool_get_core_id();
   uint32_t idx_result, idx, i, j;
   for (i = core_id; i < fftLen; i += nPE) {
@@ -147,15 +141,13 @@ static void mempool_bitrev_q16p_xpulpimg(uint16_t *pSrc, uint16_t *pDst,
 
 #else
 
-static void mempool_bitrev_q16p_xpulpimg(uint16_t *pSrc,
-                                         const uint16_t bitRevLen,
-                                         const uint16_t *pBitRevTab,
-                                         const uint32_t nPE);
+void mempool_bitrev_q16p_xpulpimg(uint16_t *pSrc, const uint16_t bitRevLen,
+                                  const uint16_t *pBitRevTab,
+                                  const uint32_t nPE);
 
-static void mempool_bitrev_q16p_xpulpimg(uint16_t *pSrc,
-                                         const uint16_t bitRevLen,
-                                         const uint16_t *pBitRevTab,
-                                         const uint32_t nPE) {
+void mempool_bitrev_q16p_xpulpimg(uint16_t *pSrc, const uint16_t bitRevLen,
+                                  const uint16_t *pBitRevTab,
+                                  const uint32_t nPE) {
   uint32_t i;
   uint32_t core_id = mempool_get_core_id();
   v2s addr1, addr2, addr3, addr4;

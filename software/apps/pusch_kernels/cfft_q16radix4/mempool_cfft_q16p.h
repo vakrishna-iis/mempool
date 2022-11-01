@@ -4,13 +4,13 @@
 
 // Author: Marco Bertuletti, ETH Zurich
 
-static void mempool_cfft_q16p(uint16_t fftLen, int16_t *pTwiddle,
-                              uint16_t *pBitRevTable, int16_t *pSrc,
-                              uint16_t bitReverseLen, uint8_t ifftFlag,
-                              uint8_t bitReverseFlag, uint32_t nPE);
+void mempool_cfft_q16p(uint16_t fftLen, int16_t *pTwiddle,
+                       uint16_t *pBitRevTable, int16_t *pSrc,
+                       uint16_t bitReverseLen, uint8_t ifftFlag,
+                       uint8_t bitReverseFlag, uint32_t nPE);
 
-static void mempool_cfft_radix4by2_q16p(int16_t *pSrc, uint32_t fftLen,
-                                        const int16_t *pCoef, uint32_t nPE);
+void mempool_cfft_radix4by2_q16p(int16_t *pSrc, uint32_t fftLen,
+                                 const int16_t *pCoef, uint32_t nPE);
 
 void mempool_cfft_q16p(uint16_t fftLen, int16_t *pTwiddle,
                        uint16_t *pBitRevTable, int16_t *pSrc,
@@ -36,7 +36,8 @@ void mempool_cfft_q16p(uint16_t fftLen, int16_t *pTwiddle,
   }
 
   if (bitReverseFlag) {
-    mempool_bitrev_q16p_xpulpimg((uint16_t *)pSrc, bitReverseLen, pBitRevTable, nPE);
+    mempool_bitrev_q16p_xpulpimg((uint16_t *)pSrc, bitReverseLen, pBitRevTable,
+                                 nPE);
   }
 }
 
